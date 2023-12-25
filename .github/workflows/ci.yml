@@ -1,0 +1,63 @@
+name: ci
+
+on: push
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    permissions: write-all
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Cache
+        uses: actions/cache@v3
+        with:
+          path: node_modules
+          key: npm-${{ hashFiles('bun.lockb') }}
+
+      - name: Set up bun
+        uses: oven-sh/setup-bun@v1
+        with:
+          bun-version: latest
+
+      - name: Set up project
+        run: bun run setup
+
+      - name: Run linters
+        run: bun run lint
+
+      - name: Run tests
+        run: bun run test
+
+      - name: Set env variables
+        run: |
+          commitMsg=$(git log -n 1 --format=%B)
+          [[ $commitMsg =~ ^v[0-9] ]] || exit 0
+          version=$(jq -r '.version' package.json)
+          [[ $commitMsg == v$version ]] || exit 0
+          echo "beta=$([[ $version =~ -|^0 ]] && echo '-p')" >> $GITHUB_ENV
+          echo "version=$version" >> $GITHUB_ENV
+
+      - name: Build dist
+        run: bun run build && bun run build:bin
+        if: ${{ env.version }}
+
+      - name: Release on GitHub
+        run: |
+          zip -r cli-$version.zip bin/*
+          gh release create v$version -t v$version $beta \
+            -n 'See [CHANGELOG.md](/CHANGELOG.md) for details' \
+            cli-$version.zip
+        if: ${{ env.version }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: Publish to npm
+        run: |
+          echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc
+          npm publish
+        if: ${{ env.version }}
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
