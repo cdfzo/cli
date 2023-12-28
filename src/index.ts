@@ -1,1 +1,3 @@
-console.log('hello world')
+import { parse } from './parser'
+
+export { parse }
