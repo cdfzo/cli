@@ -41,15 +41,16 @@ jobs:
           echo "version=$version" >> $GITHUB_ENV
 
       - name: Build dist
-        run: bun run build && bun run build:bin
+        run: |
+          bun run build
+          echo 'declare module "@cdfzo/cli" { export * from "index" }' \
+            >> dist/index.d.ts
         if: ${{ env.version }}
 
       - name: Release on GitHub
         run: |
-          zip -r cli-$version.zip bin/*
           gh release create v$version -t v$version $beta \
-            -n 'See [CHANGELOG.md](/CHANGELOG.md) for details' \
-            cli-$version.zip
+            -n 'See [CHANGELOG.md](/CHANGELOG.md) for details'
         if: ${{ env.version }}
         env:
           GH_TOKEN: ${{ github.token }}
