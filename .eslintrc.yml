@@ -24,7 +24,6 @@ rules:
   eqeqeq: 2
   func-style: 2
   grouped-accessor-pairs: 2
-  id-length: [2, { min: 2, max: 25, exceptions: ['i'] }]
   indent: [2, 2]
   line-comment-position: 2
   max-depth: 2
