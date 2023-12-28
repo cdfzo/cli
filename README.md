@@ -1,15 +1,16 @@
 # cdfzo/cli
 
-[![CI][ci-badge]][ci-url]
-[![Version][version-badge]][version-url]
-[![License][license-badge]][license-url]
+A command-line interface builder.
 
-[ci-badge]: https://img.shields.io/github/actions/workflow/status/cdfzo/cli/ci.yml?style=flat-square&logo=github&color=6060ff&label=ci
-[ci-url]: https://github.com/cdfzo/cli/actions
-[version-badge]: https://img.shields.io/github/package-json/v/cdfzo/cli/main?style=flat-square&color=6060ff&label=version
-[version-url]: https://github.com/cdfzo/cli/releases/latest
-[license-badge]: https://img.shields.io/github/license/cdfzo/cli?style=flat-square&color=6060ff
-[license-url]: https://github.com/cdfzo/cli/blob/main/LICENSE
+[![Build][build]](https://github.com/cdfzo/cli/actions)
+[![Coverage][coverage]](https://github.com/cdfzo/cli/tree/main/tests)
+[![Version][version]](https://github.com/cdfzo/cli/releases/latest)
+[![License][license]](https://github.com/cdfzo/cli/blob/main/LICENSE)
+
+[build]: https://img.shields.io/badge/build-passing-6060ff?style=flat-square&cacheSeconds=604800
+[coverage]: https://img.shields.io/badge/coverage-100%-6060ff?style=flat-square&cacheSeconds=604800
+[version]: https://img.shields.io/github/package-json/v/cdfzo/cli/main?style=flat-square&color=6060ff&label=version
+[license]: https://img.shields.io/badge/license-MIT-6060ff?style=flat-square&cacheSeconds=604800
 
 ## Contributing
 
